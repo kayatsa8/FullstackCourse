@@ -14,6 +14,7 @@ const App = () => {
    
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(() => anecdotes.map(() => 0));
+  const [topIndex, setTopIndex] = useState(0);
 
 
   const handleNextAnecdote = () => {
@@ -27,10 +28,36 @@ const App = () => {
     newVotes[selected]++;
 
     setVotes(() => newVotes);
+
+    if(newVotes[selected] > newVotes[topIndex]){
+      setTopIndex(() => selected);
+    }
   }
 
   return (
     <div>
+      <DailyAnecdote
+        anecdotes={anecdotes}
+        selected={selected}
+        votes={votes}
+        handleNextAnecdote={handleNextAnecdote}
+        handleVote={handleVote}
+      />
+
+      <TopAnecdote
+        anecdotes={anecdotes}
+        topIndex={topIndex}
+        votes={votes}
+      />
+    </div>
+  );
+}
+
+const DailyAnecdote = ({anecdotes, selected, votes, handleNextAnecdote, handleVote}) => {
+  return (
+    <div>
+      <h1>Anecdote of the day</h1>
+
       <div>
         {anecdotes[selected]}
       </div>
@@ -41,6 +68,21 @@ const App = () => {
       <button onClick={handleVote}>vote</button>
     </div>
   );
-}
+};
+
+const TopAnecdote = ({anecdotes, votes, topIndex}) => {
+
+
+  return(
+    <div>
+      <h1>Anecdote with most votes</h1>
+
+      <p>{anecdotes[topIndex]}</p>
+      <p>has {votes[topIndex]} votes</p>
+    </div>
+  );
+};
+
+
 
 export default App
