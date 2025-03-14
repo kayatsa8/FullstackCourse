@@ -15,3 +15,5 @@ const Course = ({course}) => {
 }
  
 export default Course;
+
+// separate component
