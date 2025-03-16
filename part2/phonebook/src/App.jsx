@@ -3,16 +3,20 @@ import Person from './Components/Person';
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    {
+      name: 'Arto Hellas',
+      phone: "040-1234567"
+    }
   ]); 
   const [newName, setNewName] = useState('');
+  const [newPhone, setNewPhone] = useState("");
 
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if(newName === ""){
+    if(newName === "" || newPhone === ""){
       return;
     }
 
@@ -21,10 +25,11 @@ const App = () => {
       return;
     }
 
-    const person = {name: newName};
+    const person = {name: newName, phone: newPhone};
 
     setPersons((p) => [...p, person]);
     setNewName(() => "");
+    setNewPhone(() => "");
   }
 
 
@@ -34,6 +39,9 @@ const App = () => {
       <form onSubmit={handleSubmit}>
         <div>
           name: <input value={newName} onChange={((event) => setNewName(() => event.target.value))}/>
+        </div>
+        <div>
+          nubmer: <input value={newPhone} onChange={(event) => setNewPhone(() => event.target.value)}/>
         </div>
         <div>
           <button type="submit">add</button>
